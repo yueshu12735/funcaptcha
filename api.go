@@ -108,6 +108,10 @@ func sendRequest(hex, bda string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	// Check if rid is empty
+	if !strings.Contains(arkose.Token, "sup=1|rid=") {
+		return arkose.Token, errors.New("captcha required")
+	}
 
 	return arkose.Token, nil
 }
@@ -143,7 +147,7 @@ func getBDA(hex string) string {
 	)
 	bt := getBt()
 	bw := getBw(bt)
-	return encrypt(bx, bv+bw)
+	return Encrypt(bx, bv+bw)
 }
 
 func getBt() int64 {
@@ -157,5 +161,5 @@ func getBw(bt int64) string {
 func getBdaWitBx(bx string) string {
 	bt := getBt()
 	bw := getBw(bt)
-	return encrypt(bx, bv+bw)
+	return Encrypt(bx, bv+bw)
 }
