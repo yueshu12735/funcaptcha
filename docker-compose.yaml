@@ -1,0 +1,9 @@
+version: '3'
+services:
+  funcaptcha:
+    image: 08funcaptcha
+    restart: always
+    environment:
+      - GIN_MODE=release
+    ports:
+      - "8082:8080"
